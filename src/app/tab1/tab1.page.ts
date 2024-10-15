@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, runInInjectionContext } from '@angular/core';
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capacitor/barcode-scanner'
 
 @Component({
@@ -7,6 +7,8 @@ import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capaci
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
+  scanResult = ''
 
   constructor() {}
 
@@ -17,6 +19,8 @@ export class Tab1Page {
         hint: CapacitorBarcodeScannerTypeHint.ALL
     });
     console.log(result);
+
+    this.scanResult = result.ScanResult
 
   }
 
