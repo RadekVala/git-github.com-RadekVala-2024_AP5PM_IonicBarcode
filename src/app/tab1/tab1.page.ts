@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capacitor/barcode-scanner'
 
 @Component({
   selector: 'app-tab1',
@@ -9,8 +10,14 @@ export class Tab1Page {
 
   constructor() {}
 
-  scanBarcode() {
+  async scanBarcode() {
     console.log('scan')
+
+    const result = await CapacitorBarcodeScanner.scanBarcode({
+        hint: CapacitorBarcodeScannerTypeHint.ALL
+    });
+    console.log(result);
+
   }
 
 }
