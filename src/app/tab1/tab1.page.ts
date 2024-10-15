@@ -9,4 +9,8 @@ export class Tab1Page {
 
   constructor() {}
 
+  scanBarcode() {
+    console.log('scan')
+  }
+
 }
