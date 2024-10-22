@@ -2,6 +2,8 @@ import { Component, runInInjectionContext } from '@angular/core';
 import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capacitor/barcode-scanner'
 
 import { Platform } from '@ionic/angular';
+import { AppStorageService } from '../app-storage.service';
+import { BARCODE_HISTORY } from '../app.constants';
 
 @Component({
   selector: 'app-tab1',
@@ -11,8 +13,12 @@ import { Platform } from '@ionic/angular';
 export class Tab1Page {
 
   scanResult = ''
+  barcodeArray: Array<string> = []
 
-  constructor(private platform: Platform) {}
+  constructor(
+    private platform: Platform,
+    private appStorage: AppStorageService
+  ) {}
 
   async scanBarcode() {
     console.log('scan')
@@ -32,7 +38,9 @@ export class Tab1Page {
   
     // display scan result on UI
     this.scanResult = scanResult
+    this.barcodeArray.unshift(scanResult)
 
+    this.appStorage.set(BARCODE_HISTORY, JSON.stringify(this.barcodeArray))
   }
 
 }
