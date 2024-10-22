@@ -27,7 +27,7 @@ export class Tab1Page {
       console.log(result);
       scanResult = result.ScanResult
     } else {
-      scanResult = (Math.floor(10000000 + Math.random()) * 90000000).toString() 
+      scanResult = Math.floor(10000000 + Math.random() * 90000000).toString() 
     }
   
     // display scan result on UI
