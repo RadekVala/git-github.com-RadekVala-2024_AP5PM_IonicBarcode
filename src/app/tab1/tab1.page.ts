@@ -19,7 +19,7 @@ export class Tab1Page {
 
     let scanResult = ''
 
-    if(this.platform.is('android')) {
+    if(this.platform.is('android') || this.platform.is('ios')) {
       // native barcode scanner
       const result = await CapacitorBarcodeScanner.scanBarcode({
         hint: CapacitorBarcodeScannerTypeHint.ALL
