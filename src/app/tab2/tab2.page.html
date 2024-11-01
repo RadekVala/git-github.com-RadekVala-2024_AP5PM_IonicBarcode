@@ -14,8 +14,25 @@
   </ion-header>
 
   <ion-list>
-    <ion-item *ngFor="let barcode of barcodeArray">
-      <ion-label>{{ barcode }}</ion-label>
-    </ion-item>
+    <ion-item-group *ngFor="let date of groupedBarcodes | keyvalue">
+
+        <ion-item-divider>
+          <ion-label> {{ date.key }}</ion-label>
+        </ion-item-divider>
+
+      <ion-list>
+        <ion-item-sliding *ngFor="let barcode of date.value">
+          <ion-item>
+            <ion-label>{{ barcode.code }}</ion-label>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-item-option color="danger" (click)="deleteBarcode(date.key, barcode)">
+              Delete
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-item-group>
   </ion-list>
 </ion-content>

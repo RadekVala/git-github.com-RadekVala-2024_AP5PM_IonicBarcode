@@ -4,6 +4,7 @@ import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capaci
 import { Platform } from '@ionic/angular';
 import { AppStorageService } from '../app-storage.service';
 import { BARCODE_HISTORY } from '../app.constants';
+import { Barcode } from '../model/barcode';
 
 @Component({
   selector: 'app-tab1',
@@ -13,7 +14,7 @@ import { BARCODE_HISTORY } from '../app.constants';
 export class Tab1Page {
 
   scanResult = ''
-  barcodeArray: Array<string> = []
+  barcodeArray: Array<Barcode> = []
 
   constructor(
     private platform: Platform,
@@ -33,14 +34,24 @@ export class Tab1Page {
       console.log(result);
       scanResult = result.ScanResult
     } else {
-      scanResult = Math.floor(10000000 + Math.random() * 90000000).toString() 
+      scanResult = Math.floor(10000000 + Math.random() * 90000000).toString()
     }
-  
+
     // display scan result on UI
     this.scanResult = scanResult
-    this.barcodeArray.unshift(scanResult)
+    const now = new Date();
+    const myBarcode = new Barcode(now, scanResult);
+    this.barcodeArray.unshift(myBarcode)
 
-    this.appStorage.set(BARCODE_HISTORY, JSON.stringify(this.barcodeArray))
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const myBarcodeDayAgo = new Barcode(oneDayAgo, scanResult);
+    this.barcodeArray.unshift(myBarcodeDayAgo)
+
+    const twoDaysAgo = new Date(now.getTime() - 48 * 60 * 60 * 1000);
+    const myBarcodeTwoDaysAgo = new Barcode(twoDaysAgo, scanResult);
+    this.barcodeArray.unshift(myBarcodeTwoDaysAgo)
+
+    this.appStorage.set(BARCODE_HISTORY, this.barcodeArray)
   }
 
 }
