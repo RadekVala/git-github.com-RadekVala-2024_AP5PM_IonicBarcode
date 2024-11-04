@@ -1,9 +1,9 @@
 export class Barcode {
-  date: Date;
   code: string;
+  date: Date;
 
-  constructor(date: Date, code: string) {
-    this.date = date;
+  constructor(code: string, date: Date = new Date()) {
     this.code = code;
+    this.date = date;
   }
 }
