@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppStorageService } from '../app-storage.service';
 import { BARCODE_HISTORY } from '../app.constants';
+import { Barcode } from '../model/barcode';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { BARCODE_HISTORY } from '../app.constants';
 })
 export class Tab2Page {
 
-  barcodeArray: Array<string> = []
+  barcodeArray: Barcode[] = []
 
   constructor(
     private appStorage: AppStorageService
@@ -20,7 +21,7 @@ export class Tab2Page {
     const data = await this.appStorage.get(BARCODE_HISTORY)
 
     if (data) {
-      this.barcodeArray = JSON.parse(data)
+      this.barcodeArray = data
     }
   }
 
