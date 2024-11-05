@@ -4,6 +4,7 @@ import { CapacitorBarcodeScanner, CapacitorBarcodeScannerTypeHint} from '@capaci
 import { Platform } from '@ionic/angular';
 import { AppStorageService } from '../app-storage.service';
 import { BARCODE_HISTORY } from '../app.constants';
+import { Barcode } from '../model/barcode';
 
 @Component({
   selector: 'app-tab1',
@@ -13,12 +14,39 @@ import { BARCODE_HISTORY } from '../app.constants';
 export class Tab1Page {
 
   scanResult = ''
-  barcodeArray: Array<string> = []
+  //barcodeArray: Array<Barcode> = [] 
+  barcodeArray: Barcode[] = [] 
 
   constructor(
     private platform: Platform,
     private appStorage: AppStorageService
   ) {}
+
+  async ionViewDidEnter() {
+    const data = await this.appStorage.get(BARCODE_HISTORY)
+
+    if(data) {
+      this.barcodeArray = data
+    } else {
+      // generate some mock data
+      this.generateMockData()
+    }
+  }
+
+  private generateMockData() {
+    const now = new Date();
+
+    for (let index = 0; index < 10; index++) {
+      const date = new Date(now.getTime() - index * 24 * 60 * 60 * 1000 )
+      const barcode = new Barcode(this.generateRandomCode(), date)
+
+      this.barcodeArray.push(barcode);
+    }
+  }
+
+  private generateRandomCode() {
+    return Math.floor(100000000 + Math.random() * 900000000).toString() 
+  }
 
   async scanBarcode() {
     console.log('scan')
@@ -33,14 +61,15 @@ export class Tab1Page {
       console.log(result);
       scanResult = result.ScanResult
     } else {
-      scanResult = Math.floor(10000000 + Math.random() * 90000000).toString() 
+      scanResult = this.generateRandomCode()
     }
   
     // display scan result on UI
     this.scanResult = scanResult
-    this.barcodeArray.unshift(scanResult)
+    const barcode = new Barcode(scanResult);
+    this.barcodeArray.unshift(barcode)
 
-    this.appStorage.set(BARCODE_HISTORY, JSON.stringify(this.barcodeArray))
+    this.appStorage.set(BARCODE_HISTORY, this.barcodeArray)
   }
 
 }
