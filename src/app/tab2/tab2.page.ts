@@ -25,4 +25,13 @@ export class Tab2Page {
     }
   }
 
+  deleteBarcode(barcode: Barcode){
+    const index = this.barcodeArray.indexOf(barcode)
+
+    if( index > -1) {
+      this.barcodeArray.splice(index, 1)
+      this.appStorage.set(BARCODE_HISTORY, this.barcodeArray)
+    }
+  }
+
 }
