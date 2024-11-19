@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiKey: "57216C17F450C2B33DDB6E1C53146AB2",
+  apiUrl: "/product",
 };
 
 /*
