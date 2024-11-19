@@ -1,31 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Scanner </ion-title>
+    <!-- Back Button -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/history"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Code: {{ code }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large"
-        ><ion-icon aria-hidden="true" name="qr-code-outline"></ion-icon>
-        Scanner</ion-title
-      >
+      <ion-title size="large">code_detail</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-button (click)="scanBarcode()" expand="block" class="ion-padding"
-    >Scan barcode</ion-button
-  >
-
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title *ngIf="scanResult" (click)="loadCodeFromApi(scanResult)">
-        {{ scanResult }}
-      </ion-card-title>
-      <ion-card-subtitle>Scanned code:</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
 
   <ion-card *ngIf="apiData">
     <ion-card-header>

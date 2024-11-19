@@ -8,6 +8,8 @@ import { Platform } from "@ionic/angular";
 import { AppStorageService } from "../app-storage.service";
 import { BARCODE_HISTORY } from "../app.constants";
 import { Barcode } from "../model/barcode";
+import { ApiResponse } from "../model/api_response";
+import { UpcService } from "../api/upc.service";
 
 @Component({
   selector: "app-tab1",
@@ -18,9 +20,12 @@ export class Tab1Page {
   scanResult = "";
   barcodeArray: Array<Barcode> = [];
 
+  apiData?: ApiResponse;
+
   constructor(
     private platform: Platform,
     private appStorage: AppStorageService,
+    private upcService: UpcService,
   ) {}
 
   async ionViewDidEnter() {
@@ -59,6 +64,17 @@ export class Tab1Page {
 
     // store Barcode
     this.saveToStorage(myBarcode);
+  }
+
+  loadCodeFromApi(code: string) {
+    this.upcService.getData(code).subscribe({
+      next: (data) => {
+        this.apiData = data;
+      },
+      error: (error) => {
+        console.error("Error:", error);
+      },
+    });
   }
 
   /**
@@ -100,6 +116,7 @@ export class Tab1Page {
    * @returns A string containing an 9-digit random code
    */
   private generateRandomCode(): string {
-    return Math.floor(100000000 + Math.random() * 900000000).toString(); // Generate and return a random 8-digit number as a string
+    return "0062639348571";
+    //return Math.floor(100000000 + Math.random() * 900000000).toString(); // Generate and return a random 8-digit number as a string
   }
 }
