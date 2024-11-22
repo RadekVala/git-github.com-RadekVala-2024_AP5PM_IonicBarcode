@@ -1,19 +1,17 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { UpcResponse } from "../model/upc-response";
 
 @Injectable({
   providedIn: "root",
 })
 export class UpcService {
-  private apiUrl = environment.apiUrl;
-
   constructor(private http: HttpClient) {}
 
   getData(barcode: string): Observable<UpcResponse> {
-    const url = `${this.apiUrl}/${barcode}`;
+    const url = `${environment.apiUrl}/${barcode}?apikey=${environment.apiKey}`;
 
     const header = new HttpHeaders({
       Authorization: `Bearer ${environment.apiKey}`,
