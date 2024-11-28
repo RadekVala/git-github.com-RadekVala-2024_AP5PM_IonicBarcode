@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AppStorageService } from "../app-storage.service";
 import { BARCODE_HISTORY } from "../app.constants";
 import { Barcode } from "../model/barcode";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-tab2",
@@ -11,7 +12,10 @@ import { Barcode } from "../model/barcode";
 export class Tab2Page {
   barcodeArray: Barcode[] = [];
 
-  constructor(private appStorage: AppStorageService) {}
+  constructor(
+    private appStorage: AppStorageService,
+    private router: Router,
+  ) {}
 
   async ionViewDidEnter() {
     const data = await this.appStorage.get(BARCODE_HISTORY);
@@ -28,5 +32,9 @@ export class Tab2Page {
       this.barcodeArray.splice(index, 1);
       this.appStorage.set(BARCODE_HISTORY, this.barcodeArray);
     }
+  }
+
+  goToDetail(barcode: string) {
+    this.router.navigate(["/tabs/history-detail", barcode]);
   }
 }
