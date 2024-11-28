@@ -12,6 +12,12 @@ export interface UpcResponse {
   category: string;
   metadata: Metadata;
   reviews: Reviews;
+  metanutrition: Metanutrition;
+}
+
+export interface Metanutrition {
+  energy: number;
+  energy_unit: string;
 }
 
 export interface Metadata {
